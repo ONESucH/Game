@@ -10,9 +10,13 @@
 }
 
 body {
-    position: relative;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.5);
+    background: #282828;
+}
+
+.content {
+    width: auto;
+    height: 100vh;
 }
 
 .sheath {
@@ -93,9 +97,19 @@ body {
 }
 
 .draw-circle {
+    position: absolute;
     border-radius: 100%;
     width: 25px;
     height: 25px;
     background: orange;
     box-shadow: 0 0 2px 1px red;
+}
+
+.draw-circle-crazy {
+    position: absolute;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    background: cornflowerblue;
+    box-shadow: 0 0 2px 1px #4e8bff;
 }
