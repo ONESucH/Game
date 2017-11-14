@@ -1,5 +1,4 @@
 'use strict';
-
 /* Загружаем меню */
 loadingMenu();
 
@@ -11,7 +10,7 @@ function loadingMenu() {
         play = document.createElement('div'),
         playInformation = document.createElement('div');
 
-    content.innerHTML = ''; // чистим контайнер
+    content.innerHTML = ''; // чистим контейнер
     content.className = 'content'; // content
     sheath.className = 'sheath'; // оболочка
     menu.className = 'menu'; // меню
@@ -33,11 +32,11 @@ function loadingMenu() {
 
 function start() { // запускаем игру
     var content = document.getElementsByTagName('body')[0],
-        userCircle = document.createElement('div'),
-        randomPostionCircle = Math.floor(Math.random() * (window.innerHeight - 25) + 1), // рандомная позиция user
+        userCircle = document.createElement('div'), // пользовательский круг
+        randomPositionCircle = Math.floor(Math.random() * (window.innerHeight - 25) + 1), // рандомная позиция user
         counterVertical = 0,
-        level = 1 , // уровень, чем больше тем сложнее
-        counterGorizontal = randomPostionCircle;
+        level = 1, // уровень, чем больше тем сложнее
+        counterGorizontal = randomPositionCircle;
 
     content.innerHTML = '';
     userCircle.className = 'draw-circle';
@@ -86,6 +85,7 @@ function start() { // запускаем игру
 
     content.appendChild(userCircle);
     moveBots();
+    /* Интервал создания ботов */
     setInterval(function () {
         moveBots();
     }, level * 1000);
@@ -95,7 +95,7 @@ function start() { // запускаем игру
 function moveBots() {
     var content = document.getElementsByTagName('body')[0],
         counterBots = window.innerWidth, // Скорость ботов
-        bot = document.createElement('div'),
+        bot = document.createElement('div'), // круг бота
         randomPostionCrazyCircle = Math.floor(Math.random() * (window.innerHeight) - 5); // рандомная позиция врага
 
     bot.style.marginTop = randomPostionCrazyCircle + 'px';
@@ -111,4 +111,14 @@ function moveBots() {
 
         counterBots--;
     }, 10);
+
+    /* Ловим позицию бота */
+    targetCircle();
+}
+
+/* Ловим позицию ботаб и юзера */
+function targetCircle() {
+    var content = document.getElementsByTagName('body')[0];
+
+    console.log('content', content);
 }
