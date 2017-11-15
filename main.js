@@ -1,4 +1,5 @@
 'use strict';
+var dataPosition = {};
 /* Загружаем меню */
 loadingMenu();
 
@@ -36,17 +37,27 @@ function start() { // запускаем игру
         randomPositionCircle = Math.floor(Math.random() * (window.innerHeight - 25) + 1), // рандомная позиция user
         counterVertical = 0,
         level = 1, // уровень, чем больше тем сложнее
-        counterGorizontal = randomPositionCircle;
+        counterGorizontal = randomPositionCircle,
+        sizeCircle = 25;
 
     content.innerHTML = '';
     userCircle.className = 'draw-circle';
 
     setInterval(function () {
+        var X = userCircle.getBoundingClientRect().left,
+            Y = userCircle.getBoundingClientRect().top;
 
+        dataPosition.userPosition = {
+            positionX: X,
+            positionY: Y
+        };
+
+    }, 200);
+
+    setInterval(function () {
         /* Движение пользовательского шара */
         var widthWindow = window.innerWidth,
-            heightWindow = window.innerHeight,
-            sizeCircle = 25;
+            heightWindow = window.innerHeight;
 
         userCircle.style.marginLeft = counterVertical + 'px';
         userCircle.style.marginTop = counterGorizontal + 'px';
@@ -89,6 +100,7 @@ function start() { // запускаем игру
     setInterval(function () {
         moveBots();
     }, level * 1000);
+    targetCircle(sizeCircle);
 }
 
 /* Создание, движение ботов */
@@ -101,6 +113,14 @@ function moveBots() {
     bot.style.marginTop = randomPostionCrazyCircle + 'px';
 
     setInterval(function () {
+        var X = bot.getBoundingClientRect().left,
+            Y = bot.getBoundingClientRect().top;
+
+        dataPosition.botPosition = {
+            positionX: X,
+            positionY: Y
+        };
+
         bot.style.marginLeft = counterBots + 20 + 'px';
         bot.className = 'draw-circle-crazy';
         content.appendChild(bot);
@@ -113,12 +133,18 @@ function moveBots() {
     }, 10);
 
     /* Ловим позицию бота */
-    targetCircle();
 }
 
-/* Ловим позицию ботаб и юзера */
-function targetCircle() {
-    var content = document.getElementsByTagName('body')[0];
-
-    console.log('content', content);
+/* Ловим позицию ботов и юзера */
+function targetCircle(dataSizeCircle) {
+    setInterval(function () {
+        if (dataPosition.userPosition.positionX === dataPosition.botPosition.positionX &&
+            dataPosition.userPosition.positionY === dataPosition.botPosition.positionY &&
+            dataPosition.userPosition.positionX + dataSizeCircle === dataPosition.botPosition.positionX + dataSizeCircle &&
+            dataPosition.userPosition.positionY + dataSizeCircle === dataPosition.botPosition.positionY + dataSizeCircle &&
+            dataPosition.userPosition.positionX - dataSizeCircle === dataPosition.botPosition.positionX - dataSizeCircle &&
+            dataPosition.userPosition.positionY - dataSizeCircle === dataPosition.botPosition.positionY - dataSizeCircle) {
+            alert('Сработала коллизия');
+        }
+    }, 200);
 }
